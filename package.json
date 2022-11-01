@@ -1,0 +1,23 @@
+{
+  "name": "hardhat-udemy",
+  "version": "1.0.0",
+  "description": "udemy solidity course",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/vicenterocha/hardhat-udemy.git"
+  },
+  "author": "vicente rocha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vicenterocha/hardhat-udemy/issues"
+  },
+  "homepage": "https://github.com/vicenterocha/hardhat-udemy#readme",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "hardhat": "^2.12.1"
+  }
+}
