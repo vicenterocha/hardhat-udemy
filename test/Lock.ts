@@ -15,10 +15,13 @@ describe("Lock", function () {
         const unlockTime = (await time.latest()) + ONE_YEAR_IN_SECS;
 
         // Contracts are deployed using the first signer/account by default
+        // A Signer in ethers.js is an object that represents an Ethereum account.
         const [owner, otherAccount] = await ethers.getSigners();
 
-        const Lock = await ethers.getContractFactory("Lock");
-        const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+        // A ContractFactory in ethers.js is an abstraction used to deploy new smart contracts,
+        // so Lock here is a factory for instances of our lock contract.
+        const Lock = await ethers.getContractFactory("Lock");  // Lock - constructor
+        const lock = await Lock.deploy(unlockTime, { value: lockedAmount });  // lock - instance
 
         return { lock, unlockTime, lockedAmount, owner, otherAccount };
     }
