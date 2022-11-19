@@ -15,7 +15,8 @@ class App extends React.Component {
        manager: '',
        players: [],
        lotteryBalance: ethers.BigNumber.from("0"),
-       value: ''
+       value: '',
+       message: ''
     };
   }
 
@@ -23,7 +24,7 @@ class App extends React.Component {
     // Get Provider
     this._provider = new ethers.providers.Web3Provider(window.ethereum);
     // Get the contract using the Provider
-    this._lottery = new ethers.Contract(contractAddress.Lottery, Lottery.abi, this._provider);
+    this._lottery = new ethers.Contract(contractAddress.Lottery, Lottery.abi, this._provider.getSigner(0));
 
     // Get the manager from the contract
     const manager = await this._lottery.manager();
@@ -38,7 +39,24 @@ class App extends React.Component {
     event.preventDefault();
 
     const accounts = await this._provider.listAccounts();
-    await this._lottery.enter( {from: accounts[0], value: ethers.utils.parseEther(this.state.value)} )
+
+    this.setState({ message: 'Waiting on transaction success...'});
+
+    const transactionReceipt = await this._lottery.enter( { value: ethers.utils.parseEther(this.state.value)} );
+    await transactionReceipt.wait(1);
+    
+    this.setState({ message: 'You have been entered...'});
+  }
+
+  onPickWinner = async () => {
+    const accounts = await this._provider.listAccounts();
+
+    this.setState({ message: 'Waiting on transaction success...'});
+
+    const transactionReceipt = await this._lottery.pickWinner();
+    await transactionReceipt.wait(1);
+    
+    this.setState({ message: 'The winner is has been picked!'});
   }
 
   render() {
@@ -62,6 +80,15 @@ class App extends React.Component {
         </div>
         <button>Enter!</button>
       </form>
+
+      <hr />
+
+      <h4>Ready to pick a winner?</h4>
+      <button onClick={this.onPickWinner}>Pick a winner</button>
+
+      <hr/>
+      
+      <h1>{this.state.message}</h1>
       
       </div>
     );

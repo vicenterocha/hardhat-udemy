@@ -21,17 +21,17 @@ async function main() {
 
   console.log("Account balance:", (await deployer.getBalance()).toString());
 
-  const Lottery = await ethers.getContractFactory("Lottery");
-  const lottery = await Lottery.deploy();
-  await lottery.deployed();
+  const Campaing = await ethers.getContractFactory("Campaing");
+  const campaing = await Campaing.deploy();
+  await campaing.deployed();
 
-  console.log("Lottery address:", lottery.address);
+  console.log("Campaing address:", campaing.address);
 
   // We also save the contract's artifacts and address in the frontend directory
-  saveFrontendFiles(lottery);
+  saveFrontendFiles(campaing);
 }
 
-function saveFrontendFiles(lottery) {
+function saveFrontendFiles(campaing) {
   const fs = require("fs");
   const contractsDir = path.join(__dirname, "..", "frontend", "src", "contracts");
 
@@ -41,14 +41,14 @@ function saveFrontendFiles(lottery) {
 
   fs.writeFileSync(
     path.join(contractsDir, "contract-address.json"),
-    JSON.stringify({ Lottery: lottery.address }, undefined, 2)
+    JSON.stringify({ Campaing: campaing.address }, undefined, 2)
   );
 
-  const LotteryArtifact = artifacts.readArtifactSync("Lottery");
+  const CampaingArtifact = artifacts.readArtifactSync("Campaing");
 
   fs.writeFileSync(
-    path.join(contractsDir, "Lottery.json"),
-    JSON.stringify(LotteryArtifact, null, 2)
+    path.join(contractsDir, "Campaing.json"),
+    JSON.stringify(CampaingArtifact, null, 2)
   );
 }
 
