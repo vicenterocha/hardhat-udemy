@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
-import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract CampaignFactory {
     address[] public deployedCampaigns;
@@ -59,10 +58,9 @@ contract Campaign {
     }
 
     function approve(uint requestIndex) public {
+        require(approvers[msg.sender], "Only donators can approve");
         Request storage request = requests[requestIndex];  // it's storage because we want changes
         // to this variable to be reflected in our requests storage variable.
-
-        require(approvers[msg.sender], "Only donators can approve");
         require(!request.approvals[msg.sender], "Can only approve once");
 
         request.approvals[msg.sender] = true;
@@ -72,8 +70,8 @@ contract Campaign {
     function finalizeRequest(uint requestIndex) public restricted {
         Request storage request = requests[requestIndex];
         
-        require(request.approvalsCount > (approversCount / 2));
-        require(!request.complete, "Request can only be finalized once");
+        require(request.approvalsCount > (approversCount / 2), "Not enough approvals");
+        require(!request.complete, "Request already finalized");
 
         payable(request.recipient).transfer(request.amount);
         request.complete = true;
