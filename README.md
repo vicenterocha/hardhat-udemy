@@ -1,13 +1,22 @@
-# Sample Hardhat Project
+# Ethereum and Solidity: The Complete Developer's Guide - Udemy course
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+This repository contains my solution to the lessons on the [Ethereum and Solidity: The Complete Developer's Guide](https://www.udemy.com/course/ethereum-and-solidity-the-complete-developers-guide) from [Udemy](https://www.udemy.com) using [hardhat](https://hardhat.org).
 
-Try running some of the following tasks:
+It contains both smart contract and FE implementation for the Lottery contract. But for the Campaign, only the smart contract.
+
+For the campaign FE I decided to try [Next.js](https://nextjs.org) in a separate repo. It's not done yet and I'm not sure I'll actually finish it honestly.
+
+NOTE: This is not a guide, for that you should follow the course. I decided to make this public in case anyone took on the challenge of doing the course in hardhat and might need some help.
+
+# Basic commands
 
 ```shell
+# Help
 npx hardhat help
+
+# Test
 npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
+
+# Deploy contract
 npx hardhat run scripts/deploy.ts
 ```
